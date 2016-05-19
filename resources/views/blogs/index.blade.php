@@ -28,9 +28,6 @@
 			                 @if( Auth::user()->id == $blog->user->id)
 			                 	 <a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">Edit Post</a>
 			                 @endif
-			              <!--   <a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">Edit Post</a> -->
-			               <!--  <a href="{{ route('blogs.show', $blog->id) }}" class="btn btn-success">View Blog</a> -->
-			                <!-- <a href="{{ route('blogs.edit', $blog->id) }}" class="btn btn-warning">Edit Blog</a> -->
 		                </div>
 			            <div class="col-md-4">
 			            	@if( Auth::user()->id == $blog->user->id)

@@ -1,5 +1,5 @@
-
 @extends('layout')
+
 
 @section('content')
 
@@ -82,15 +82,6 @@
                                 <li> <p>{{ $comments->content }}</p> </li>
                             </ul>
                         </div>
-                       <!--  <ul>
-                        <li>
-                            <div>
-                              <header><a href="javascript:void(0);">Sir_Pig</a> - <span>posted 1 day ago</span></header>
-                              <p>Sed felis lorem, venenatis sed malesuada vitae, tempor vel turpis. Mauris in dui velit, vitae mollis risus.</p>
-                             
-                            </div> 
-                        </li>
-                      </ul> -->
                     </li>
     
                 </div>
