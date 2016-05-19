@@ -11,23 +11,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class CommentsController extends Controller
-{	
+{   
     
     public function store(Request $request)
-	{
-	    $this->validate($request, [
-	        'content' => 'required'
-	    ]);
+    {
+        $this->validate($request, [
+            'content' => 'required'
+        ]);
 
-	    $user = $request->user();
+        $user = $request->user();
 
-	  	$user->comments()->create([
-  			'blog_id'=> $request->blogs_id, 
-  			'content'=> $request->content,
-	  	]);
+        $user->comments()->create([
+            'blog_id'=> $request->blogs_id, 
+            'content'=> $request->content,
+        ]);
 
-	  	return redirect('blogs/'. $request->blogs_id);
+        return redirect('blogs/'. $request->blogs_id);
 
-	}
+    }
 
 }
