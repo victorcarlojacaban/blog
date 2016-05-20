@@ -12,7 +12,11 @@ use App\Http\Requests;
 
 class CommentsController extends Controller
 {   
-    
+     /**
+     * store newly created resource on storage
+     *
+     * @return Response
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -23,7 +27,7 @@ class CommentsController extends Controller
 
         $user->comments()->create([
             'blog_id'=> $request->blogs_id, 
-            'content'=> $request->content,
+            'content'=> strip_tags($request->content),
         ]);
 
         return redirect('blogs/'. $request->blogs_id);

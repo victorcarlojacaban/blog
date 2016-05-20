@@ -25,12 +25,22 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    //indicates that a user can have many blogs
+     /**
+     * One to Many relation
+     *
+     * @return Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function blogs() 
     {   
         //represents the relationship between user and blogs
         return $this->hasMany(Blog::class);
     }
+
+     /**
+     * One to Many relation
+     *
+     * @return Illuminate\Database\Eloquent\Relations\hasMany
+     */
 
     public function comments() 
     {

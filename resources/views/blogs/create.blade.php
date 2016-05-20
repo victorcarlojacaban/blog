@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 
 
 @section('content')
@@ -35,8 +35,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {!! Form::label('content', 'Content:') !!}
-                    {!! Form::textarea('content',null,['class'=>'form-control']) !!}
+                    {{ Form::label('content', 'Content:') }}
+                    {{ Form::textarea('content',null,['class'=>'textarea']) }}
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
-                    <a href="/blogs" class="btn btn-primary">Cancel</a> 
+                    <a href="/blogs" class="btn btn-primary">Back to List</a> 
                 </div>
             </div>
         </div>

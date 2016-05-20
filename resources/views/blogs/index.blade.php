@@ -1,14 +1,7 @@
-@extends('layout')
+@extends('layouts.layout')
 
 
 @section('content')
-
-<!-- will be used to show any messages -->
-@if(Session::has('flash_message'))
-    <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
-    </div>
-@endif
 
     <!-- Main Content -->
     <div class="container">
@@ -23,26 +16,36 @@
                         	{{ $blog->content }}
                         </div>
 	                    <p class="post-meta">Posted by <a href="#">{{ $blog->user->name }}</a> {{ $blog->updated_at }}</p>
-	                    <div class="col-md-6">
-			                <a href="/blogs/{{ $blog->id }}" class="btn btn-success">Read More</a>
-			                 @if( Auth::user()->id == $blog->user->id)
-			                 	 <a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">Edit Post</a>
-			                 @endif
+	                    <div class="col-md-12" id="actionButtons">
+	                    	<table class="table">
+	                    		<tr>
+	                    			<td> <a href="/blogs/{{ $blog->id }}" class="btn btn-success">Read More</a></td>
+	                    			@if( Auth::user()->id == $blog->user->id)
+	                    			<td><a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">Edit Post</a></td>
+									<td><button id="btnDelete" class="btn btn-danger">Delete</button>
+										{!! Form::open([
+						          			'id' => 'deleteForm',
+								            'method' => 'DELETE',
+								            'route' => ['blogs.destroy', $blog]
+								        ]) !!}
+								        {!! Form::close() !!}	
+									</td>
+	                    			<!-- <td>
+	                    				{{ csrf_field() }}
+						          		{!! Form::open([
+						          			'id' => 'deleteForm',
+								            'method' => 'DELETE',
+								            'route' => ['blogs.destroy', $blog]
+								        ]) !!}
+								        {!! Form::submit('Remove', ['class' => 'btn btn-danger', 'id' => 'btnDelete']) !!}
+								        {!! Form::close() !!}								     
+	                    			</td> -->
+	                    			@endif
+	                    		</tr>
+	                    	</table>
 		                </div>
-			            <div class="col-md-4">
-			            	@if( Auth::user()->id == $blog->user->id)
-				                {{ csrf_field() }}
-				          		{!! Form::open([
-						            'method' => 'DELETE',
-						            'route' => ['blogs.destroy', $blog->id]
-						        ]) !!}
-						        {!! Form::submit('Remove Post', ['class' => 'btn btn-danger']) !!}
-						        {!! Form::close() !!}
-				       		@endif
-				       	</div>
 	                </div>
 	                <hr>
-	                <!-- Pager -->
 	                <ul class="pager">
 	                    <li class="next">
 	                        <a href="#">Older Posts &rarr;</a>
@@ -52,6 +55,5 @@
             </div>
         </div>
     </div>
-
 @stop
 

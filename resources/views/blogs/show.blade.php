@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 
 
 @section('content')
@@ -75,7 +75,7 @@
                 @foreach($comment as $comments)
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <li>
-                        <div  style="background-color:#D6CBCB;">
+                        <div  style="background-color:#FAF3F3;">
                             <header><b><a href="javascript:void(0);">{{ $comments->user->name }}</a></b> - 
                             <span>said on <i>{{ $comments->created_at }}</i></span></header>
                             <ul>

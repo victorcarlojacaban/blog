@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\User;
 use Session;
 use App\Blog;
-use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
@@ -17,6 +16,12 @@ class BlogsController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * display listing of resource
+     *
+     * @return Response
+     */
+
     public function index()
     {
         $blogs = Blog::orderBy('created_at', 'desc')->get();
@@ -24,11 +29,22 @@ class BlogsController extends Controller
         return view('blogs.index', compact('blogs'));
     }
 
+    /**
+     * show form on creating new resource
+     *
+     * @return Response
+     */
+
     public function create() 
-    {
+    {   
         return view('blogs.create');
     }
 
+     /**
+     * display specified resource
+     *
+     * @return Response
+     */
 
     public function show(Blog $blogs)
     { 
@@ -36,6 +52,12 @@ class BlogsController extends Controller
 
        return view('blogs.show', compact(['blogs', 'comment']));       
     }
+
+     /**
+     * show form on editing specified resource
+     *
+     * @return Response
+     */
 
     public function edit(Blog $blogs, Request $request)
     {   
@@ -49,6 +71,12 @@ class BlogsController extends Controller
         return redirect('blogs');
     }
 
+     /**
+     * update specified resource on storage
+     *
+     * @return Response
+     */
+
     public function update(Blog $blogs, Request $request)
     {
         $this->validate($request, [
@@ -56,14 +84,23 @@ class BlogsController extends Controller
             'content' => 'required'
         ]);
 
-        $input = $request->all();
+        $input = [
+            'title' => $request->title,
+            'content' => strip_tags($request->content),
+        ];
 
         $blogs->fill($input)->save();
 
-        Session::flash('flash_message', 'Blog successfully updated!');
+        flash()->success('Success!', 'Article successfully updated');
 
         return redirect('blogs');
     }
+
+     /**
+     * store newly created resource on storage
+     *
+     * @return Response
+     */
 
     public function store(Request $request)
     {
@@ -76,20 +113,26 @@ class BlogsController extends Controller
 
         $user->blogs()->create([
             'title' => $request->title,
-            'content' => $request->content,
+            'content' => strip_tags($request->content),
         ]);
 
-      
-        Session::flash('flash_message', 'Blog successfully added!');
+        flash()->success('Success!', 'Article successfully posted');
+
         return redirect('blogs');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return Response
+     */
 
     public function destroy(Blog $blogs)
     {
         $blogs->delete();
 
-        Session::flash('flash_message', 'Blog successfully deleted!');
+        flash()->success('Success!', 'Article successfully removed');
 
-        return redirect('blogs');
+        return back();
     }
 }

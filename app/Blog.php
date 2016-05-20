@@ -15,11 +15,20 @@ class Blog extends Model
         'title', 'content',
     ];
 
-    //indicates that a blog belongs to a specific user
+    /**
+     * One to Many relation
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user() 
     {
         return $this->belongsTo(User::class);
     }
+    /**
+     * One to Many relation
+     *
+     * @return Illuminate\Database\Eloquent\Relations\hasMany
+     */
 
     public function comments() 
     {
