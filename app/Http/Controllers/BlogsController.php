@@ -93,7 +93,7 @@ class BlogsController extends Controller
 
         flash()->success('Success!', 'Article successfully updated');
 
-        return redirect('blogs');
+        return redirect('blogs/' . $blogs->id);
     }
 
      /**
