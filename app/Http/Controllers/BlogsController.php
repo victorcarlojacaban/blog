@@ -154,12 +154,12 @@ class BlogsController extends Controller
      * @return Builder
      */
 
-    public function isAuthorized($currentUser, $blogUser)
+    private function isAuthorized($currentUser, $blogUser)
     {
         if ($currentUser->isAdmin() || $currentUser->id == $blogUser) {
             return true;
         }
-        
+
         return false;
     }
 }
