@@ -1,6 +1,7 @@
 This is a very simple blog application using Laravel 5.2. 
 
 Specfication
+
 	For Regular User
 		Login
 		Register
@@ -17,6 +18,7 @@ Specfication
 		View all post
 
 Technologies used
+
 	Laravel 5.2
 	Bootstrap
 	CSS
