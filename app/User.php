@@ -16,6 +16,10 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    protected $casts = [
+        'is_admin' => 'boolean',
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -26,13 +30,26 @@ class User extends Authenticatable
     ];
 
      /**
+     * this will check for an admin column in your users table
+     * @return boolean
+     */
+
+    public function isAdmin()
+    {
+        if ($this->is_admin) {
+            return true;
+        }
+
+        return false;
+    }
+
+     /**
      * One to Many relation
-     *
+     * Represents the relationship between user and blogs
      * @return Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function blogs() 
-    {   
-        //represents the relationship between user and blogs
+    public function blogs()
+    {
         return $this->hasMany(Blog::class);
     }
 
@@ -42,8 +59,21 @@ class User extends Authenticatable
      * @return Illuminate\Database\Eloquent\Relations\hasMany
      */
 
-    public function comments() 
+    public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Scope query by name
+     *
+     * @param string title
+     * @return Builder
+     */
+    public function scopeShowUser($query, $name)
+    {
+        $name =  str_replace('-', ' ', $name);
+
+        return $query->where(compact(['name']));
     }
 }

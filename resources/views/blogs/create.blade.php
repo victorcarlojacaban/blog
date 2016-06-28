@@ -4,7 +4,7 @@
 @section('content')
 
 
-<div class="container">
+ <div class="row">
 
     @if($errors->any())
         <div class="alert alert-danger">
@@ -22,6 +22,7 @@
             </div>
         </div>
         <hr>
+ 
     {!! Form::open(['route' => 'blogs.store']) !!}
         <div class="container">
             <div class="row">
@@ -44,7 +45,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
+                    {!! Form::submit('Post', ['class' => 'btn btn-success']) !!}
                     <a href="/blogs" class="btn btn-primary">Back to List</a> 
                 </div>
             </div>

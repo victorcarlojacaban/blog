@@ -4,56 +4,65 @@
 @section('content')
 
     <!-- Main Content -->
-    <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-             	@foreach($blogs as $blog)
-	                <div class="post-preview">
-	                    <a href="{{ route('blogs.show', $blog->id) }}">
-	                        <h2 class="post-title">{{ $blog->title }}</h2>
-	                     </a>
-                        <div class="post-subtitle">
-                        	{{ $blog->content }}
+            <div class="col-lg-8">
+            	@foreach($blogs as $blog)
+                <article class="read">
+                        <div class="post-image">
+                            <div class="post-heading">
+                                <h3><a href="/blogs/{{ escape_url($blog->title) }}">{!! $blog->title !!}</a></h3>
+                            </div>
+                        <!--     <img src="../img/dummies/blog/img1.jpg" alt="" /> -->
                         </div>
-	                    <p class="post-meta">Posted by <a href="#">{{ $blog->user->name }}</a> {{ $blog->updated_at }}</p>
-	                    <div class="col-md-12" id="actionButtons">
-	                    	<table class="table">
-	                    		<tr>
-	                    			<td> <a href="/blogs/{{ $blog->id }}" class="btn btn-success">Read More</a></td>
-	                    			@if( Auth::user()->id == $blog->user->id)
-	                    			<td><a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">Edit Post</a></td>
-									<td><button id="btnDelete" class="btn btn-danger">Delete</button>
-										{!! Form::open([
-						          			'id' => 'deleteForm',
-								            'method' => 'DELETE',
-								            'route' => ['blogs.destroy', $blog]
-								        ]) !!}
-								        {!! Form::close() !!}	
-									</td>
-	                    			<!-- <td>
-	                    				{{ csrf_field() }}
-						          		{!! Form::open([
-						          			'id' => 'deleteForm',
-								            'method' => 'DELETE',
-								            'route' => ['blogs.destroy', $blog]
-								        ]) !!}
-								        {!! Form::submit('Remove', ['class' => 'btn btn-danger', 'id' => 'btnDelete']) !!}
-								        {!! Form::close() !!}								     
-	                    			</td> -->
-	                    			@endif
-	                    		</tr>
-	                    	</table>
-		                </div>
-	                </div>
-	                <hr>
-	                <ul class="pager">
-	                    <li class="next">
-	                        <a href="#">Older Posts &rarr;</a>
-	                    </li>
-	                </ul>
+                        <p>
+                             {!! $blog->content !!}
+                        </p>
+                </article>
+                <div class="container-fluid">
+                 		 <div class="bottom-article">
+                            <ul class="meta-post">
+                                <li><i class="icon-calendar"></i><a href="#"> {!!  $blog->created_at !!}</a></li>
+                                <li><i class="icon-user"></i><a href="#"> {!!  $blog->user->name !!}</a></li>
+  
+                              <!--   <li><i class="icon-comments"></i><a href="#">4 Comments</a></li> -->
+                            </ul>
+                          
+                           <a href="/blogs/{{ escape_url($blog->title) }}" class="pull-right">Visit Page <i class="icon-angle-right"></i></a>
+                        </div>
+                </div>
                 @endforeach
+                <hr>
+                <div id="pagination">
+                    <span class="all">Page 1 of 3</span>
+                    <span class="current">1</span>
+                    <a href="#" class="inactive">2</a>
+                    <a href="#" class="inactive">3</a>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <aside class="right-sidebar">
+                <div class="widget">
+                    <form class="form-search">
+                        <input class="form-control" type="text" placeholder="Search..">
+                    </form>
+                </div>
+                <div class="widget">
+                    <h5 class="widgetheading">Latest posts</h5>
+                    @foreach($blogs as $blog)
+                    <ul class="recent">
+                        <li>
+	                        <!-- <img src="img/dummies/blog/65x65/thumb1.jpg" class="pull-left" alt="" /> -->
+	                        <h6><a href="/blogs/{{ escape_url($blog->title) }}">{!! $blog->title !!}</a></h6>
+	                        <p>
+	                             Mazim alienum appellantur eu cu ullum officiis pro pri
+	                        </p>
+                        </li>
+                    </ul>
+                    @endforeach
+                </div>
+                </aside>
             </div>
         </div>
-    </div>
 @stop
 

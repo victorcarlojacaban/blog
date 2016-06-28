@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 
 use App\User;
-use Session;
 use App\Blog;
+use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Request as Call;
+use Illuminate\Support\Facades\Auth;
 
 class BlogsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['index']]);
+
+        parent::__construct();
     }
 
     /**
@@ -25,7 +29,6 @@ class BlogsController extends Controller
     public function index()
     {
         $blogs = Blog::orderBy('created_at', 'desc')->get();
-
         return view('blogs.index', compact('blogs'));
     }
 
@@ -35,8 +38,8 @@ class BlogsController extends Controller
      * @return Response
      */
 
-    public function create() 
-    {   
+    public function create()
+    {
         return view('blogs.create');
     }
 
@@ -46,11 +49,11 @@ class BlogsController extends Controller
      * @return Response
      */
 
-    public function show(Blog $blogs)
-    { 
-       $comment = $blogs->comments()->get();
-
-       return view('blogs.show', compact(['blogs', 'comment']));       
+    public function show($title)
+    {
+        $blogs = Blog::showBlog($title)->firstOrFail();
+        $comment = $blogs->comments()->get();
+        return view('blogs.show', compact('blogs', 'comment'));
     }
 
      /**
@@ -59,16 +62,22 @@ class BlogsController extends Controller
      * @return Response
      */
 
-    public function edit(Blog $blogs, Request $request)
-    {   
-        $user = $request->user();
+    public function edit($title, Request $request)
+    {
+        $blogs = Blog::showBlog($title)->firstOrFail();
 
-        if ($user && $user->id == $blogs->user_id) 
-        {
-            return view('blogs.edit', compact('blogs'));
+        $user = $this->user;
+        
+        if (!$this->isAuthorized($user, $blogs->user_id)) {
+            if ($request->ajax()) {
+                return response(['message' => 'Unauthorized'], 403);
+            }
+
+            flash()->error('Sorry!', 'Unknown action');
+
+            return redirect('blogs');
         }
-
-        return redirect('blogs');
+        return view('blogs.edit', compact('blogs'));
     }
 
      /**
@@ -80,20 +89,20 @@ class BlogsController extends Controller
     public function update(Blog $blogs, Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'title' => 'required', 
             'content' => 'required'
         ]);
 
         $input = [
             'title' => $request->title,
-            'content' => strip_tags($request->content),
+            'content' => $request->content,
         ];
 
         $blogs->fill($input)->save();
 
         flash()->success('Success!', 'Article successfully updated');
 
-        return redirect('blogs/' . $blogs->id);
+        return redirect('blogs/' . $blogs->title);
     }
 
      /**
@@ -113,7 +122,7 @@ class BlogsController extends Controller
 
         $user->blogs()->create([
             'title' => $request->title,
-            'content' => strip_tags($request->content),
+            'content' => $request->content,
         ]);
 
         flash()->success('Success!', 'Article successfully posted');
@@ -130,9 +139,27 @@ class BlogsController extends Controller
     public function destroy(Blog $blogs)
     {
         $blogs->delete();
-
+       
         flash()->success('Success!', 'Article successfully removed');
 
-        return back();
+        return redirect('blogs');
+    }
+
+
+     /**
+     * Check if user is authorized to do specified actions
+     *
+     * @param int currentUser
+     * @param int blogUser
+     * @return Builder
+     */
+
+    public function isAuthorized($currentUser, $blogUser)
+    {
+        if ($currentUser->isAdmin() || $currentUser->id == $blogUser) {
+            return true;
+        }
+        
+        return false;
     }
 }

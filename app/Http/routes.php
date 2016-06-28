@@ -12,19 +12,33 @@
 */
 /*applying web middlewate group to every routes*/
 
-
 //User
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
 
-Route::auth();
-Route::get('/', 'HomeController@index');
+/*Route::post('/login', 'Auth\AuthController@postLogin'); 
 
+Route::get('/logout','Auth\AuthController@logout');*/
+
+Route::auth();
+
+Route::get('/', 'PagesController@home'); 
 
 Route::group(['middleware' => ['revalidate']], function () {
+    //Admin
+    Route::resource('admin','AdminController', ['except' => 'show']);
+    Route::delete('admin/blogs/{id}',['uses' => 'AdminController@destroyBlog', 'as' => 'admin.destroyBlog']);
+  	Route::get('admin/blogs/', 'AdminController@blogs');
+  	Route::get('admin/users/{username}', 'AdminController@userDetails');
+  	Route::get('admin/users', 'AdminController@users');
+  	Route::get('admin/post/{title}', 'AdminController@show');
+  	    
     //Blog
-	Route::resource('blogs','BlogsController');
-	Route::resource('comments','CommentsController');
+    Route::resource('blogs','BlogsController');
+    Route::post('blogs/{title}/photo','BlogsController@addPhoto');
+
+     	//Comments
+  	Route::resource('comments','CommentsController');
 });

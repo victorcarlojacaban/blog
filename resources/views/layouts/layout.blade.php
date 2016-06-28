@@ -1,120 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Blog</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />
-  	<link rel="stylesheet" href="/css/bootstrap.css" type="text/css" />
-    <link rel="stylesheet" href="/css/clean-blog.css" type="text/css" />
-  	<link rel="stylesheet" href="/css/sweetalert.css" type="text/css" />
+<meta charset="utf-8">
+<title>Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<!-- css -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/css/fancybox/jquery.fancybox.css" rel="stylesheet">
+<link href="/css/flexslider.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/sweetalert.css" type="text/css" />
+
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
 </head>
 <body>
- <!-- <nav class="navbar navbar-inverse navbar-custom navbar-fixed-top"> -->
- <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/blogs">Blog Post</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Login</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
-                @else
-                	<li>
-	                    <a href="{{ url('/blogs') }}">Home</a>
-	                </li>
-	                <li>
-	                    <a href="{{ url('/blogs/create') }}">Create Post</a>
-	                </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/logout') }}">Logout</a></li>
-                        </ul>
-                    </li>
-                @endif
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
-    
-<header class="intro-header" style="background-image: url('../../img/bg-post.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Blaggerz</h1>
-                    <hr class="small">
-                    <span class="subheading">Blaggerz organization</span>
+<div id="wrapper">
+    <!-- start header -->
+    <header>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/blogs"><span>B</span>LAGGERS</a>
+                </div>
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav navbar-right">
+                         @if (Auth::check())
+                            <li>
+                                <a href="{{ url('/blogs') }}">Home</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/blogs/create') }}">Create Post</a>
+                            </li>
+                             <li>
+                                @if(Auth::user()->isAdmin())
+                                    <a href="{{ url('/admin') }}">Admin Dashboard</a>
+                                @endif
+                            </li>
+                              <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/logout') }}">Logout</a></li>
+                                </ul>
+                            </li>
+                        @else
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
+                        @endif
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
-</header>
-
-@yield('content')
-
-<footer>
+    </header>
+    <!-- end header -->
+    <section id="inner-headline">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                    <li>
-                        <a href="#">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
+                    <li class="active">Blog</li>
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
             </div>
         </div>
     </div>
- </footer>
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/clean-blog.min.js"></script>
-  <script src="/js/sweetalert-dev.js"></script>
-  <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-  <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
-  <script>
-    $('textarea').ckeditor();
+    </section>
+    <section id="content">
+        <div class="container">
+            @yield('content')
+        </div>
+    </section>
+    <footer>
+    </footer>
+</div>
+<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+<!-- javascript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.fancybox.pack.js"></script>
+<script src="/js/jquery.fancybox-media.js"></script>
+<script src="/js/google-code-prettify/prettify.js"></script>
+<script src="/js/portfolio/jquery.quicksand.js"></script>
+<script src="/js/portfolio/setting.js"></script>
+<script src="/js/jquery.flexslider.js"></script>
+<script src="/js/animate.js"></script>
+<script src="/js/custom.js"></script>
+
+<script src="/js/sweetalert-dev.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.js"></script>
+<script src="/js/readmore.min.js"></script>
+<script>
+    $('.textarea').ckeditor();
     // $('.textarea').ckeditor(); // if class is prefered.
-   </script>
+    $('.read').readmore({
+      speed: 75,
+      lessLink: '<a href="/blogs/asd">Read less</a>'
+    });
+</script>
 
-
-  @include('flash.flash')
+@include('flash.flash')
 </body>
 </html>

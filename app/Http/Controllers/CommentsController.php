@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class CommentsController extends Controller
-{   
+{
      /**
      * store newly created resource on storage
      *
@@ -19,6 +19,8 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
+        $blog = Blog::where('id', $request->blogs_id)->first();
+
         $this->validate($request, [
             'content' => 'required'
         ]);
@@ -26,12 +28,10 @@ class CommentsController extends Controller
         $user = $request->user();
 
         $user->comments()->create([
-            'blog_id'=> $request->blogs_id, 
-            'content'=> strip_tags($request->content),
+            'blog_id'=> $blog->id, 
+            'content'=> $request->content,
         ]);
 
-        return redirect('blogs/'. $request->blogs_id);
-
+        return redirect('blogs/'. $blog->title);
     }
-
 }

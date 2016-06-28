@@ -12,8 +12,6 @@
 
 @endif
 
-
-
 @if (session()->has('flash_message_overlay'))
 
 	<script>
@@ -28,19 +26,19 @@
 @endif
 
 <script>
-	
-	$('#btnDelete').on('click', function(){
-	  	swal({   
-	    title: "Are you sure to delete this post?",
-	    text: "You will not be able to recover this Blog post anymore",         
-	    type: "warning",   
-	    showCancelButton: true,   
-	    confirmButtonColor: "#DD6B55",
-	    confirmButtonText: "Yes, delete it!", 
-	    closeOnConfirm: false 
-	  }, 
-	  function(){   
-	    $("#deleteForm").submit();
-  	});
-})
+	$(document).ready(function () {
+		$('body').on('click','.btnDelete',function () {
+	    	swal({
+		        title: "Are you sure to delete this post?",
+		        text: "You will not be able to recover this Blog post anymore!",
+		        type: "warning",
+		        showCancelButton: true,
+		        confirmButtonClass: 'btn-danger',
+		        confirmButtonText: 'Yes, delete it!',
+	        },
+		    function(){   
+			    $("#deleteForm").submit();
+		  	});
+	    });
+	});
 </script>

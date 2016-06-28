@@ -69,12 +69,16 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        'custom' => [
+            'driver' => 'custom',
+            'model' => App\User::class,
+        ],
+    ],
 
-        // 'users' => [
+     // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-    ],
 
     /*
     |--------------------------------------------------------------------------

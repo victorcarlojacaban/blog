@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use App\Auth\CustomUserProvider;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -69,4 +71,46 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+/*
+    public function showLoginForm(){
+    
+        return view('auth.login');
+    }
+    
+    public function showRegistrationForm(){
+        return view('admin.auth.register');
+    }*/
+
+        /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\Response
+     */
+/*    public function logout()
+    {
+        Auth::guard($this->getGuard())->logout();
+
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
+
+    public function postLogin(Request $request)
+    {
+        $user = new CustomUserProvider;
+
+        $dummy = [
+            'id' => 1,
+            'name' => 'Victor',
+            'email' => 'kobe@yahoo.com',
+            'password' => '$2y$10$IK4JnZbTIJKkne0Bcq2XU.lsJ4Tg5AOq8KnjqaC3YsaPVOspPvdFe'
+
+        ];
+
+        $isUser = $user->retrieveById($dummy['id']);
+
+        if ($request->email == $isUser->email)
+        {
+            return true;
+        }
+        return false;
+    }*/
 }

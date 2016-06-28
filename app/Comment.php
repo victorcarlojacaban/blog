@@ -8,7 +8,7 @@ class Comment extends Model
 {
     protected $fillable = [
         'blog_id',
-       'content',
+        'content',
     ];
 
     /**
@@ -16,7 +16,7 @@ class Comment extends Model
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() 
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -26,7 +26,7 @@ class Comment extends Model
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function blog() 
+    public function blog()
     {
         return $this->belongsTo(Blog::class);
     }
