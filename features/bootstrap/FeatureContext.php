@@ -39,7 +39,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iVisitIndexPage()
     {
         $this->visit("/login");
-        $this->printLastResponse();
     }
 
     /**
@@ -48,7 +47,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iAmLoggedIn()
     {
         $this->visit("/blogs");  
-        $this->printLastResponse();
     }
 
 
