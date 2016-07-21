@@ -46,7 +46,7 @@
                    @forelse($comment as $comments)
 				        	<tr>
 				        		<td>
-				        			<div class="col-md-4"><i>{!! $comments->user->name !!}</i> at {!! $comments->created_at !!}</div>
+				        			<div class="col-md-4"><i>{!! $comments->user->name !!}</i> about {!! $comments->updated_at->diffForHumans() !!}</div>
 				        			<div class="col-md-8">{!! $comments->content !!}</div>
 				        		</td>
 				        	</tr>

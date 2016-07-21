@@ -6,9 +6,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Blog;
 use App\Comment;
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use Request as Call;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BlogsController extends Controller
@@ -28,7 +27,8 @@ class BlogsController extends Controller
 
     public function index()
     {
-        $blogs = Blog::orderBy('created_at', 'desc')->get();
+        $blogs = Blog::latest()->paginate(5);
+        
         return view('blogs.index', compact('blogs'));
     }
 
