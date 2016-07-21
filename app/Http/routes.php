@@ -18,13 +18,10 @@ Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
 
-/*Route::post('/login', 'Auth\AuthController@postLogin'); 
-
-Route::get('/logout','Auth\AuthController@logout');*/
 
 Route::auth();
 
-Route::get('/', 'PagesController@home'); 
+Route::get('/', 'PagesController@home');
 
 Route::group(['middleware' => ['revalidate']], function () {
     //Admin
@@ -39,6 +36,9 @@ Route::group(['middleware' => ['revalidate']], function () {
     Route::resource('blogs','BlogsController');
     Route::post('blogs/{title}/photo','BlogsController@addPhoto');
 
-     	//Comments
-  	Route::resource('comments','CommentsController');
+    //Comments
+    Route::post('blogs/{id}/comments',['uses' => 'CommentsController@store', 'as' => 'comments.store']);
+    /*Route::resource('comments','CommentsController');
+    Route::post('comments/{blog_id}','CommentsController@store');*/
+  	
 });

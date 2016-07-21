@@ -21,7 +21,7 @@
                 <div class="container-fluid">
                  		 <div class="bottom-article">
                             <ul class="meta-post">
-                                <li><i class="icon-calendar"></i><a href="#"> {!!  $blog->created_at !!}</a></li>
+                                <li><i class="icon-calendar"></i><a href="#"> {!!  $blog->updated_at->diffForHumans() !!}</a></li>
                                 <li><i class="icon-user"></i><a href="#"> {!!  $blog->user->name !!}</a></li>
   
                               <!--   <li><i class="icon-comments"></i><a href="#">4 Comments</a></li> -->
@@ -31,14 +31,7 @@
                         </div>
                 </div>
                 @endforeach
-                <hr>
-                <div id="pagination">
-                    <span class="all">Page 1 of 3</span>
-                    <span class="current">1</span>
-                    <a href="#" class="inactive">2</a>
-                    <a href="#" class="inactive">3</a>
-                </div>
-
+                {{ $blogs->links() }}
             </div>
             <div class="col-lg-4">
                 <aside class="right-sidebar">

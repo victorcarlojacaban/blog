@@ -38,7 +38,7 @@
                   Author:  {!! $blogs->user->name !!}
                 </div>
                  <div class="col-lg-4 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <i>Date Posted: {!! $blogs->updated_at !!}</i>
+                    <i>Date Posted: {!! $blogs->updated_at->diffForHumans() !!}</i>
                 </div>
             </div>
         </div>
@@ -72,12 +72,10 @@
          <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {!! Form::open(['route' => ['comments.store', $blogs->id]]) !!} 
+                    {!! Form::open(['method' => 'POST','route' => ['comments.store', $blogs]]) !!} 
                          <div class="well">
                          <h4>Leave a Comment:</h4>               
-                            <div class="form-group">
-                               {!! Form::hidden('blogs_id',$blogs->id,['class'=>'form-control']) !!}
-                            </div>
+                           
                             <div class="form-group">
                                 {!! Form::textarea('content',null,['class'=>'form-control']) !!}
                             </div>
@@ -101,7 +99,7 @@
                         </a>
                         <div class="media-body">
                             <h4 class="media-heading">{!! $comments->user->name !!}
-                                <small>at {!! $comments->created_at; !!}</small>
+                                <small>about {!! $comments->updated_at->diffForHumans(); !!}</small>
                             </h4>
                             {!! $comments->content !!}
                         </div>
