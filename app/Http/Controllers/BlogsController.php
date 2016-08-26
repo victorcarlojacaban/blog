@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\User;
 use App\Blog;
 use App\Comment;
@@ -27,7 +26,7 @@ class BlogsController extends Controller
 
     public function index()
     {
-        $blogs = Blog::latest()->paginate(5);
+        $blogs = Blog::latest()->paginate(3);
         
         return view('blogs.index', compact('blogs'));
     }
@@ -69,9 +68,6 @@ class BlogsController extends Controller
         $user = $this->user;
         
         if (!$this->isAuthorized($user, $blogs->user_id)) {
-            if ($request->ajax()) {
-                return response(['message' => 'Unauthorized'], 403);
-            }
 
             flash()->error('Sorry!', 'Unknown action');
 
@@ -89,7 +85,7 @@ class BlogsController extends Controller
     public function update(Blog $blogs, Request $request)
     {
         $this->validate($request, [
-            'title' => 'required', 
+            'title' => 'required',
             'content' => 'required'
         ]);
 
@@ -105,7 +101,7 @@ class BlogsController extends Controller
         return redirect('blogs/' . $blogs->title);
     }
 
-     /**
+    /**
      * store newly created resource on storage
      *
      * @return Response
@@ -144,7 +140,6 @@ class BlogsController extends Controller
 
         return redirect('blogs');
     }
-
 
      /**
      * Check if user is authorized to do specified actions
